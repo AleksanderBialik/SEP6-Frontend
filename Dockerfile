@@ -1,33 +1,22 @@
-# Use the official lightweight Node.js 12 image.
-# https://hub.docker.com/_/node
-FROM node:12-alpine
+FROM node:lts-alpine
 
-ENV PORT=8080
+# install simple http server for serving static content
+RUN npm install -g http-server
 
-# Create and change to the app directory.
+# make the 'app' folder the current working directory
 WORKDIR /app
 
-RUN set -ex && \
-    adduser node root && \
-    chmod g+w /app && \
-    apk add --update --no-cache \
-      g++ make python \
-      openjdk8-jre
-
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure both package.json AND package-lock.json are copied.
-# Copying this separately prevents re-running npm install on every code change.
+# copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
 
-# Install production dependencies.
-RUN npm ci
+# install project dependencies
+RUN npm install
 
-# Copy local code to the container image.
-COPY . ./
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . .
 
+# build app for production with minification
 RUN npm run build
 
-RUN npm run serve
-
-# Run the web service on container startup.
-CMD [ "npm", "run", "start" ]
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
