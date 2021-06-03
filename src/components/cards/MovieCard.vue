@@ -12,7 +12,7 @@
                 ? '1'
                 : ''
             "
-            :src="src"
+            :src="getImageUrl() + src"
           >
           </v-img>
         </v-card>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { IMAGE_URL } from "../../axios";
 export default {
   props: {
     text: {
@@ -42,7 +43,11 @@ export default {
       default: "",
     },
   },
-  methods: {},
+  methods: {
+    getImageUrl() {
+      return IMAGE_URL;
+    },
+  },
 };
 </script>
 

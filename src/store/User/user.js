@@ -39,6 +39,7 @@ const user = {
           { root: true }
         );
         dispatch("snackbar/toggleSnackbar", true, { root: true });
+        router.push({ name: "home" });
       } catch (error) {
         commit("SET_TOKEN", null);
 
@@ -73,6 +74,7 @@ const user = {
           { root: true }
         );
         dispatch("snackbar/toggleSnackbar", true, { root: true });
+        router.push({ name: "login" });
       } catch (error) {
         dispatch(
           "snackbar/setSnackbar",
@@ -192,6 +194,7 @@ const user = {
         return null;
       }
     },
+    isLoggedIn: (state) => !!state.token,
   },
 };
 

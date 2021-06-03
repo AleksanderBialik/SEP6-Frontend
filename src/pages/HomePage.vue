@@ -1,8 +1,8 @@
 <template>
   <div>
     <div style="margin-bottom:30px;">
-      <h1>Popular People</h1>
-      <v-carousel hide-delimiters height="auto">
+      <h1 style="color:#66999bff">Popular People</h1>
+      <v-carousel hide-delimiters height="auto" cycle style="min-height:600px">
         <template v-for="(item, index) in slider">
           <v-carousel-item
             v-if="(index + 1) % columns === 1 || columns === 1"
@@ -11,10 +11,10 @@
             <v-row class="flex-nowrap" style="height:100%">
               <template v-for="(n, i) in columns">
                 <template v-if="index + i < slider.length">
-                  <v-col :key="i" cols="3">
-                    <Card
-                      text="BRAD PID :DDDD"
-                      src="https://www.vogue.pl/uploads/repository/00_inne/pitt-serial.jpg"
+                  <v-col :key="i" cols="12" xl="3" lg="4" md="6">
+                    <PersonCard
+                      :text="slider[+index + i]"
+                      src="/kU3B75TyRiCgE270EyZnHjfivoq.jpg"
                       to="/dsaad"
                     />
                   </v-col>
@@ -26,8 +26,8 @@
       </v-carousel>
     </div>
     <div>
-      <h1>Popular Movies</h1>
-      <v-carousel hide-delimiters height="auto">
+      <h1 style="color:#66999bff">Popular Movies</h1>
+      <v-carousel hide-delimiters height="auto" cycle style="min-height:600px">
         <template v-for="(item, index) in slider">
           <v-carousel-item
             v-if="(index + 1) % columns === 1 || columns === 1"
@@ -36,10 +36,10 @@
             <v-row class="flex-nowrap" style="height:100%">
               <template v-for="(n, i) in columns">
                 <template v-if="index + i < slider.length">
-                  <v-col :key="i" cols="3">
-                    <Card
+                  <v-col :key="i" cols="12" xl="3" lg="4" md="6">
+                    <PersonCard
                       text="BRAD PID :DDDD"
-                      src="https://www.vogue.pl/uploads/repository/00_inne/pitt-serial.jpg"
+                      src="/kU3B75TyRiCgE270EyZnHjfivoq.jpg"
                       to="/dsaad"
                     />
                   </v-col>
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import Card from "../components/Card.vue";
+import PersonCard from "../components/cards/PersonCard.vue";
 
 export default {
   name: "Home",
 
   components: {
-    Card,
+    PersonCard,
   },
   data() {
     return {

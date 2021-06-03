@@ -6,6 +6,7 @@ import {
   min_value,
   numeric,
   oneOf,
+  min,
 } from "vee-validate/dist/rules";
 import { extend } from "vee-validate";
 
@@ -32,6 +33,10 @@ extend("numeric", {
 extend("min_value", {
   ...min_value,
   message: "Min value for this field is: {min}!",
+});
+extend("min", {
+  ...min,
+  message: "This field must contain atleast {length} characters!",
 });
 
 extend("checkbox", {

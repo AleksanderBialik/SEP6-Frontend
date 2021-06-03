@@ -90,7 +90,7 @@
               >REGISTER</v-list-item-title
             >
           </v-list-item>
-          <v-list-item @click="drawer = !drawer">
+          <v-list-item @click="drawer = !drawer" v-if="isLoggedIn">
             <v-list-item-title
               :class="{
                 'large-font': $vuetify.breakpoint.name === 'xs',
@@ -129,7 +129,7 @@
 
     <Snackbar />
     <v-main @click.native="onClick()">
-      <v-container>
+      <v-container :fill-height="fillHeight.includes($route.name)">
         <router-view></router-view>
       </v-container>
     </v-main>
@@ -152,12 +152,18 @@ export default {
 
   data: () => ({
     drawer: false,
+    fillHeight: ["login", "register"],
   }),
   methods: {
     onClick() {
       if (this.drawer) {
         this.drawer = !this.drawer;
       }
+    },
+  },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters["user/isLoggedIn"];
     },
   },
 };
