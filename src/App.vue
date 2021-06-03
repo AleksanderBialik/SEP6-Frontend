@@ -112,7 +112,9 @@
         ></v-img>
       </router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="title">BestMovies</v-toolbar-title>
+      <v-toolbar-title class="title"
+        >UDAŁO SIE SAMO SIE ZBUILDOWAŁO</v-toolbar-title
+      >
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon color="black" right @click="drawer = !drawer">
