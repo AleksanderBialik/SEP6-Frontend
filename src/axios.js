@@ -15,8 +15,9 @@ const getToken = () => {
 
 instance.interceptors.request.use((request) => {
   if (getToken()) {
-    request.headers["X-Auth-Token"] = `Bearer ${getToken()}`;
+    request.headers["x-auth-token"] = `${getToken()}`;
   }
+
   return request;
 });
 

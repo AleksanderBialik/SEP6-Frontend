@@ -22,11 +22,20 @@ const user = {
   actions: {
     async login({ commit, dispatch }, object) {
       try {
-        const response = await axios.post("user/login", {
-          password: object.password,
-          username: object.username,
-        });
-        const token = response.headers["X-Auth-Token"];
+        const response = await axios.post(
+          "user/login",
+          {
+            password: object.password,
+            username: object.username,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response);
+        const token = response.data.token;
         localStorage.setItem("token", token);
         commit("SET_TOKEN", token);
         dispatch(
@@ -59,10 +68,18 @@ const user = {
     },
     async register({ dispatch }, object) {
       try {
-        const response = await axios.post("user/register", {
-          password: object.password,
-          username: object.username,
-        });
+        const response = await axios.post(
+          "user/register",
+          {
+            password: object.password,
+            username: object.username,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         console.log(response);
         dispatch(
           "snackbar/setSnackbar",

@@ -72,10 +72,10 @@ export default {
   }),
   methods: {
     async onLogin() {
-      const email = this.username;
+      const username = this.username;
       const password = this.password;
 
-      await this.$store.dispatch("user/login", { email, password });
+      await this.$store.dispatch("user/login", { username, password });
       this.$refs.logObs.reset();
     },
   },

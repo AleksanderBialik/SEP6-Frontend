@@ -35,6 +35,10 @@ export default {
     MovieCard,
   },
 
+  created() {
+    this.$store.dispatch("user/fetchFavouriteMovies");
+  },
+
   data: () => ({
     movies: [
       "aaaaa",
