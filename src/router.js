@@ -10,8 +10,8 @@ import MoviePage from "./pages/MoviePage";
 import PersonPage from "./pages/PersonPage";
 import FavouritesPage from "./pages/FavouritesPage";
 import ErrorPage from "./pages/ErrorPage.vue";
-import jwt_decode from "jwt-decode";
-import store from "./store";
+// import jwt_decode from "jwt-decode";
+// import store from "./store";
 // import moment from "moment";
 // import axios from "./axios"
 
@@ -79,27 +79,27 @@ let router = new Router({
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
-  if (to.meta.requiresAuth) {
-    try {
-      jwt_decode(window.localStorage.getItem("token"));
-    } catch (err) {
-      router.push({ name: "login" });
-      store.dispatch(
-        "snackbar/setSnackbar",
-        {
-          color: "red",
-          icon: "exclamation-triangle",
-          message: "Log in to see your favourites list",
-        },
-        { root: true }
-      );
-      store.dispatch("snackbar/toggleSnackbar", true, { root: true });
-    }
-  } else {
-    next();
-  }
-  next();
-});
+// router.beforeEach(async (to, from, next) => {
+//   if (to.meta.requiresAuth) {
+//     try {
+//       jwt_decode(window.localStorage.getItem("token"));
+//     } catch (err) {
+//       router.push({ name: "login" });
+//       store.dispatch(
+//         "snackbar/setSnackbar",
+//         {
+//           color: "red",
+//           icon: "exclamation-triangle",
+//           message: "Log in to see your favourites list",
+//         },
+//         { root: true }
+//       );
+//       store.dispatch("snackbar/toggleSnackbar", true, { root: true });
+//     }
+//   } else {
+//     next();
+//   }
+//   next();
+// });
 
 export default router;

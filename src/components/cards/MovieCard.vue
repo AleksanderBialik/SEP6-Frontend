@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <v-hover>
-      <template v-slot:default="{ hover }">
+  <v-hover>
+    <template v-slot:default="{ hover }">
+      <div>
         <v-card :elevation="hover ? 10 : 0" tile :to="to">
           <v-img
             v-ripple
+            style="position:relative"
             class="black--text align-end "
             :aspect-ratio="
               $vuetify.breakpoint.name === 'xs' ||
@@ -16,14 +17,21 @@
           >
           </v-img>
         </v-card>
-      </template>
-    </v-hover>
-    <v-card elevation="0" color="transparent" :to="to" v-ripple="false"
-      ><v-card-title class="cardTitle smallPadding noSelect justify-center">
-        <span class="break text-center">{{ text }}</span>
-      </v-card-title></v-card
-    >
-  </div>
+        <v-btn
+          @click="removeFromFavourites()"
+          type="button"
+          color="error"
+          v-if="hover && remove"
+          >Remove</v-btn
+        >
+        <v-card elevation="0" color="transparent" :to="to" v-ripple="false"
+          ><v-card-title class="cardTitle smallPadding noSelect justify-center">
+            <span class="break text-center">{{ text }}</span>
+          </v-card-title></v-card
+        >
+      </div>
+    </template>
+  </v-hover>
 </template>
 
 <script>
@@ -31,6 +39,10 @@ import { IMAGE_URL } from "../../axios";
 export default {
   props: {
     text: {
+      type: String,
+      default: "",
+    },
+    movieId: {
       type: String,
       default: "",
     },
@@ -42,10 +54,19 @@ export default {
       type: String,
       default: "",
     },
+    remove: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     getImageUrl() {
       return IMAGE_URL;
+    },
+    async removeFromFavourites() {
+      await this.$store.dispatch("user/removeFromFavourites", {
+        movieId: this.movieId,
+      });
     },
   },
 };

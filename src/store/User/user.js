@@ -59,11 +59,11 @@ const user = {
     },
     async register({ dispatch }, object) {
       try {
-        await axios.post("user/register", {
+        const response = await axios.post("user/register", {
           password: object.password,
           username: object.username,
         });
-
+        console.log(response);
         dispatch(
           "snackbar/setSnackbar",
           {
@@ -76,6 +76,7 @@ const user = {
         dispatch("snackbar/toggleSnackbar", true, { root: true });
         router.push({ name: "login" });
       } catch (error) {
+        console.log(error.response);
         dispatch(
           "snackbar/setSnackbar",
           {
