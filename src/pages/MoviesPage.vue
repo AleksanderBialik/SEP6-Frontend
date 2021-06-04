@@ -78,7 +78,7 @@ export default {
       return this.$store.getters["movie/getMovies"];
     },
   },
-  destroyed() {
+  created() {
     this.$store.commit("movie/SET_MOVIES", {});
   },
   methods: {},

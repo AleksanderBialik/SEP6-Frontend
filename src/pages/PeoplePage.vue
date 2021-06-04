@@ -78,8 +78,9 @@ export default {
       return this.$store.getters["people/getPeople"];
     },
   },
-  destroyed() {
+  created() {
     this.$store.commit("people/SET_PEOPLE", {});
+    console.log("test");
   },
   methods: {},
 };
