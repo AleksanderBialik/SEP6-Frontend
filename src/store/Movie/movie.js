@@ -4,10 +4,10 @@ const movie = {
   namespaced: true,
 
   state: () => ({
-    movies: [],
-    movie: {},
+    movies: {},
+    movie: null,
     topMovies: {},
-    popularMovies: [],
+    popularMovies: {},
   }),
 
   mutations: {
@@ -20,8 +20,8 @@ const movie = {
     SET_TOP_MOVIES(state, topMovies) {
       state.topMovies = topMovies;
     },
-    SET_POPULAR_MOVIES(state, topMovies) {
-      state.topMovies = topMovies;
+    SET_POPULAR_MOVIES(state, popularMovies) {
+      state.popularMovies = popularMovies;
     },
   },
 
@@ -46,7 +46,7 @@ const movie = {
     async fetchMovies({ dispatch, commit }, object) {
       try {
         const response = await axios.get(
-          `movie?search=${object.search}&page=${object.page}`
+          `movies?search=${object.search}&page=${object.page}`
         );
         commit("SET_MOVIES", response.data);
       } catch (error) {
@@ -64,7 +64,7 @@ const movie = {
     },
     async fetchTopMovies({ dispatch, commit }, object) {
       try {
-        const response = await axios.get(`movie/top?page=${object.page}`);
+        const response = await axios.get(`movies/top?page=${object.page}`);
         commit("SET_TOP_MOVIES", response.data);
       } catch (error) {
         dispatch(
@@ -81,8 +81,9 @@ const movie = {
     },
     async fetchPopularMovies({ dispatch, commit }) {
       try {
-        const response = await axios.get(`movie/popular`);
+        const response = await axios.get(`movies/popular`);
         commit("SET_POPULAR_MOVIES", response.data);
+        console.log(response);
       } catch (error) {
         dispatch(
           "snackbar/setSnackbar",
@@ -102,6 +103,7 @@ const movie = {
     getMovies: (state) => state.movies,
     getMovie: (state) => state.movie,
     getTopMovies: (state) => state.topMovies,
+    getPopularMovies: (state) => state.popularMovies,
   },
 };
 

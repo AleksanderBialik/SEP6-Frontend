@@ -21,19 +21,22 @@
       :class="{
         'column-margin': index + 1 == movies.length && movies.length % 2 != 0,
       }"
-      v-for="(movie, index) in movies"
+      v-for="(movie, index) in movies.results"
       :key="index"
     >
       <MovieCard
-        src="/kU3B75TyRiCgE270EyZnHjfivoq.jpg"
-        text="aaaa"
-        :to="`/movie/${movie.id}/`"
+        :src="movie.poster_path"
+        :text="movie.title"
+        :to="`/movie/${movie.id}`"
       />
     </v-col>
 
     <v-col cols="10">
       <div class="text-center">
-        <v-pagination v-model="page" :length="2000"></v-pagination>
+        <v-pagination
+          v-model="page"
+          :length="movies.total_pages"
+        ></v-pagination>
       </div>
     </v-col>
   </v-row>
@@ -48,27 +51,26 @@ export default {
   },
   data: () => ({
     search: "",
-    movies: [
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-      "dasdas",
-    ],
+    page: 1,
   }),
   watch: {
     search() {
       if (this.search.length >= 3) {
-        this.$store.dispatch("movie/fetchMovies", { search: this.search });
+        this.$store.dispatch("movie/fetchMovies", {
+          search: this.search,
+          page: 1,
+        });
       }
+      if (this.search.length <= 2) {
+        this.$store.commit("movie/SET_MOVIES", {});
+      }
+    },
+    page() {
+      this.$store.dispatch("movie/fetchMovies", {
+        search: this.search,
+        page: this.page,
+      });
+      window.scrollTo(0, 0);
     },
   },
   computed: {
@@ -76,6 +78,7 @@ export default {
       return this.$store.getters["movie/getMovies"];
     },
   },
+  methods: {},
 };
 </script>
 

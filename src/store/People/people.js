@@ -4,9 +4,9 @@ const people = {
   namespaced: true,
 
   state: () => ({
-    person: {},
+    person: null,
     people: {},
-    popularPeople: [],
+    popularPeople: {},
   }),
 
   mutations: {
@@ -42,7 +42,7 @@ const people = {
     async fetchPeople({ dispatch, commit }, object) {
       try {
         const response = await axios.get(
-          `person?search=${object.search}&page=${object.page}`
+          `people?search=${object.search}&page=${object.page}`
         );
         commit("SET_PEOPLE", response.data);
       } catch (error) {
@@ -51,7 +51,7 @@ const people = {
           {
             color: "red",
             icon: "exclamation-triangle",
-            message: "Couldnt retrieve the people",
+            message: "Couldn't retrieve the people",
           },
           { root: true }
         );
@@ -60,7 +60,7 @@ const people = {
     },
     async fetchPopularPeople({ dispatch, commit }) {
       try {
-        const response = await axios.get(`person/popular`);
+        const response = await axios.get(`people/popular`);
         commit("SET_POPULAR_PEOPLE", response.data);
       } catch (error) {
         dispatch(
@@ -68,7 +68,7 @@ const people = {
           {
             color: "red",
             icon: "exclamation-triangle",
-            message: "Couldnt retrieve the popular people",
+            message: "Couldn't retrieve the popular people",
           },
           { root: true }
         );

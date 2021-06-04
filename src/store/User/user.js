@@ -145,11 +145,19 @@ const user = {
     },
     async addToFavourites({ dispatch }, object) {
       try {
-        await axios.get(`user/playlist/addToFavourite`, {
-          movie_id: object.movieId,
-          title: object.title,
-          poster_path: object.path,
-        });
+        await axios.post(
+          `user/playlist/addToFavourite`,
+          {
+            movie_id: object.movie_id,
+            title: object.title,
+            poster_path: object.poster_path,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         dispatch(
           "snackbar/setSnackbar",
           {
@@ -166,7 +174,7 @@ const user = {
           {
             color: "red",
             icon: "exclamation-triangle",
-            message: "Couldnt retrieve the movies",
+            message: "Movie can't be added to favourites",
           },
           { root: true }
         );
@@ -174,6 +182,7 @@ const user = {
       }
     },
     async removeFromFavourites({ dispatch }, object) {
+      console.log(object);
       try {
         await axios.delete(
           `user/playlist/removeFromFavourite/${object.movieId}`
@@ -188,13 +197,15 @@ const user = {
           { root: true }
         );
         dispatch("snackbar/toggleSnackbar", true, { root: true });
+
+        dispatch("fetchFavouriteMovies");
       } catch (error) {
         dispatch(
           "snackbar/setSnackbar",
           {
             color: "red",
             icon: "exclamation-triangle",
-            message: "Couldnt retrieve the movies",
+            message: "Movie can't be removed from favourites",
           },
           { root: true }
         );

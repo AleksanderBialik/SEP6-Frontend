@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div style="margin-bottom:30px;">
+    <div>
       <h1 style="color:#66999bff">Popular People</h1>
       <v-carousel hide-delimiters height="auto" cycle style="min-height:600px">
-        <template v-for="(item, index) in slider">
+        <template v-for="(person, index) in people">
           <v-carousel-item
             v-if="(index + 1) % columns === 1 || columns === 1"
             :key="index"
           >
             <v-row class="flex-nowrap" style="height:100%">
               <template v-for="(n, i) in columns">
-                <template v-if="index + i < slider.length">
+                <template v-if="index + i < people.length">
                   <v-col :key="i" cols="12" xl="3" lg="4" md="6">
                     <PersonCard
-                      :text="slider[+index + i]"
-                      src="/kU3B75TyRiCgE270EyZnHjfivoq.jpg"
-                      to="/dsaad"
+                      :text="people[+index + i].name"
+                      :src="people[+index + i].profile_path"
+                      :to="`/person/${people[+index + i].id}`"
                     />
                   </v-col>
                 </template>
@@ -28,19 +28,19 @@
     <div>
       <h1 style="color:#66999bff">Popular Movies</h1>
       <v-carousel hide-delimiters height="auto" cycle style="min-height:600px">
-        <template v-for="(item, index) in slider">
+        <template v-for="(movie, index) in movies">
           <v-carousel-item
             v-if="(index + 1) % columns === 1 || columns === 1"
             :key="index"
           >
             <v-row class="flex-nowrap" style="height:100%">
               <template v-for="(n, i) in columns">
-                <template v-if="index + i < slider.length">
+                <template v-if="index + i < movies.length">
                   <v-col :key="i" cols="12" xl="3" lg="4" md="6">
-                    <PersonCard
-                      text="BRAD PID :DDDD"
-                      src="/kU3B75TyRiCgE270EyZnHjfivoq.jpg"
-                      to="/dsaad"
+                    <MovieCard
+                      :text="movies[+index + i].title"
+                      :src="movies[+index + i].poster_path"
+                      :to="`/movie/${movies[+index + i].id}`"
                     />
                   </v-col>
                 </template>
@@ -55,12 +55,18 @@
 
 <script>
 import PersonCard from "../components/cards/PersonCard.vue";
+import MovieCard from "../components/cards/MovieCard.vue";
 
 export default {
   name: "Home",
 
   components: {
     PersonCard,
+    MovieCard,
+  },
+  created() {
+    this.$store.dispatch("movie/fetchPopularMovies");
+    this.$store.dispatch("people/fetchPopularPeople");
   },
   data() {
     return {
@@ -95,6 +101,12 @@ export default {
       }
 
       return 1;
+    },
+    movies() {
+      return this.$store.getters["movie/getPopularMovies"].results;
+    },
+    people() {
+      return this.$store.getters["people/getPopularPeople"].results;
     },
   },
 };

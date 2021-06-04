@@ -90,7 +90,7 @@
               >REGISTER</v-list-item-title
             >
           </v-list-item>
-          <v-list-item @click="drawer = !drawer" v-if="isLoggedIn">
+          <v-list-item @click="(drawer = !drawer), logOut()" v-if="isLoggedIn">
             <v-list-item-title
               :class="{
                 'large-font': $vuetify.breakpoint.name === 'xs',
@@ -112,7 +112,7 @@
         ></v-img>
       </router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="title">BestMovies123</v-toolbar-title>
+      <v-toolbar-title class="title">BestMovies</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon color="black" right @click="drawer = !drawer">
@@ -159,6 +159,9 @@ export default {
       if (this.drawer) {
         this.drawer = !this.drawer;
       }
+    },
+    logOut() {
+      this.$store.dispatch("user/logout");
     },
   },
   computed: {

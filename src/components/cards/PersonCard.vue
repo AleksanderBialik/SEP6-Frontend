@@ -4,6 +4,7 @@
       <template v-slot:default="{ hover }">
         <v-card :elevation="hover ? 10 : 0" tile :to="to">
           <v-img
+            v-if="src"
             v-ripple
             class="black--text align-end "
             :aspect-ratio="
@@ -12,7 +13,20 @@
                 ? '1'
                 : ''
             "
-            :src="getImageUrl() + src"
+            :src="getImageUrl()"
+          >
+          </v-img>
+          <v-img
+            v-else
+            v-ripple
+            class="black--text align-end "
+            :aspect-ratio="
+              $vuetify.breakpoint.name === 'xs' ||
+              $vuetify.breakpoint.name === 'sm'
+                ? '1'
+                : ''
+            "
+            src="../../assets/nophoto.png"
           >
           </v-img>
         </v-card>
@@ -20,7 +34,9 @@
     </v-hover>
     <v-card elevation="0" color="transparent" :to="to" v-ripple="false"
       ><v-card-title class="cardTitle smallPadding noSelect justify-center">
-        <span class="break text-center">{{ text }}</span>
+        <span style="word-break:break-word" class="break text-center">{{
+          text
+        }}</span>
       </v-card-title></v-card
     >
   </div>
@@ -45,7 +61,7 @@ export default {
   },
   methods: {
     getImageUrl() {
-      return IMAGE_URL;
+      return IMAGE_URL + this.src;
     },
   },
 };
