@@ -34,7 +34,6 @@ const user = {
             },
           }
         );
-        console.log(response);
         const token = response.data.token;
         localStorage.setItem("token", token);
         commit("SET_TOKEN", token);
@@ -68,7 +67,7 @@ const user = {
     },
     async register({ dispatch }, object) {
       try {
-        const response = await axios.post(
+        await axios.post(
           "user/register",
           {
             password: object.password,
@@ -80,7 +79,6 @@ const user = {
             },
           }
         );
-        console.log(response);
         dispatch(
           "snackbar/setSnackbar",
           {
@@ -182,7 +180,6 @@ const user = {
       }
     },
     async removeFromFavourites({ dispatch }, object) {
-      console.log(object);
       try {
         await axios.delete(
           `user/playlist/removeFromFavourite/${object.movieId}`
