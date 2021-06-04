@@ -15,13 +15,13 @@
         ><v-card elevation="0">
           <v-card-title class="pl-0 pt-0">{{ movie.title }}</v-card-title>
           <v-card-text class="d-flex pl-0 flex-column justify-center">
-            <p>
+            <p v-if="movie.vote_average">
               Average rating :
               <span style="font-size:20px" class="bold">{{
                 movie.vote_average
               }}</span>
             </p>
-            <p>
+            <p v-if="movie.vote_count">
               Total votes:
               <span style="font-size:20px" class="bold">{{
                 movie.vote_count
@@ -34,7 +34,7 @@
           >
         </v-card>
       </v-col>
-      <v-col cols="12">
+      <v-col v-if="movie.cast" cols="12">
         <div>
           <h1 style="color:#66999bff">Cast</h1>
           <v-carousel
