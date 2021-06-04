@@ -78,6 +78,9 @@ export default {
       return this.$store.getters["people/getPeople"];
     },
   },
+  destroyed() {
+    this.$store.commit("people/SET_PEOPLE", {});
+  },
   methods: {},
 };
 </script>

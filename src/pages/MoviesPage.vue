@@ -78,6 +78,9 @@ export default {
       return this.$store.getters["movie/getMovies"];
     },
   },
+  destroyed() {
+    this.$store.commit("movie/SET_MOVIES", {});
+  },
   methods: {},
 };
 </script>
